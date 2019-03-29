@@ -11,7 +11,10 @@ def check4Folders(listed, fltype, MFolder = ''):
         for item in os.listdir('.'):
             if os.path.isdir(item):
                 folderList.append(item)
-        folderList.remove('.git')
+        try:
+            folderList.remove('.git')
+        except FileNotFoundError:
+            ''#print("you aren't the creator, my bad!")
         for folder in folderList:
             if folder not in listed:
                 print(f"found new folder {folder}")
