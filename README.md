@@ -1,3 +1,4 @@
 # Neekos AllPurpose Manager
-This is unfinished.
-If you're looking for something similar the only other option is the NullpoMino Add-On Manager.  Which is designed to work with NullpoMino.
+Now in what would be considered "Alpha".
+It "works" but not as well as I would like it too.
+I will continue to work on it until it is how I envisioned it.

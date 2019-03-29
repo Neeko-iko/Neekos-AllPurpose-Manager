@@ -30,7 +30,6 @@ def check4Folders(listed, fltype, MFolder = ''):
                 print(f"found new folder {folder}")
                 makeFolder(fltype, folder, listed)
 
-
 def makeFolder(foldertype, name, listed):
     if foldertype == 'game':
         listed[name] = {}
@@ -54,11 +53,11 @@ def makeFolder(foldertype, name, listed):
         while action != '1' and action != '2':
             print("please use the numbers by each type of action. \n\n")
             action = input("what type of action will be preformed in this folder?\n"
-        "[1] Pack Replacement (entire folders will be moved and stored here) \n[2] File Replacement (Files will be moved and stored here)\n")
+        "[1] Pack Replacement (entire folders will be moved and stored here) \n[2] fileMove (Files will be moved and stored here)\n")
         if action == '1':
             action = 'foldReplacement'
         elif action == '2':
-            action = 'fileReplace'
+            action = 'fileMove'
         print(listed)
         listed['directories'][name] = direct
         listed['actions'][name] = action
@@ -67,7 +66,16 @@ def makeFolder(foldertype, name, listed):
         json.dump(data, f, indent = 4)
         f.close()
 
-
+def actionComplete(action, dest, selection):
+    if action == 'foldReplacement':
+        itemList = os.listdir(selection)
+        for file in itemList:
+            if os.path.exists(f"{dest}\\{file}"):
+                os.remove(f"{dest}\\{file}")
+            shutil.copy2(f"{selection}\\{file}", f"{dest}\\{file}")
+    elif action == 'fileMove':
+        shutil.copy2(f"{selection}", f"{dest}")
+        
 
 
 f = open('folders.json')
@@ -89,8 +97,15 @@ while True:
             Folders = data['Folders'][decide]['subs']
             check4Folders(subdata, 'sub', decide)
             decide = input("I'm assuming you know what these do, so I'll display what I can see.\n[press ? to search for new folders]\n\n" + ', '.join(Folders) + '\n\n')
-            if decide == '?':
+            if decide in Folders:
+                selection = None
+                selectionlist = os.listdir(f'./{initialDecide}/{decide}')
+                while selection not in selectionlist:
+                    selection = input("Please select a skintype\n\n" + ", ".join(selectionlist) + "\n\n")
+                destination = data['Folders'][initialDecide]['directory'] + subdata['directories'][decide]
+                actionComplete(subdata['actions'][decide], destination, f'./{initialDecide}/{decide}/{selection}')
+                print("Alrighty! Done! Going back to main.")
                 decide = initialDecide
-
-
-
+                break
+            else:
+                decide = initialDecide
