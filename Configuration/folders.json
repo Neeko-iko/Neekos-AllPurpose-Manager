@@ -1,19 +1,4 @@
 {
     "Folders": {
-        "Nullpomino": {
-            "directory": "A:/Programming/Python/!!!!TESTING",
-            "subs": [
-                "Visuals",
-                "sounds"
-            ],
-            "actions": {
-                "Visuals": "fileMove",
-                "sounds": "foldReplacement"
-            },
-            "directories": {
-                "Visuals": "/thing",
-                "sounds": "/folderpack test"
-            }
-        }
     }
 }
