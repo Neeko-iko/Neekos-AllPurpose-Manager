@@ -7,12 +7,14 @@ import fnmatch
 def check4Folders(listed, fltype, MFolder = ''):
     if fltype == 'game':
         folderList = []
-        print(listed)
+        #This is for debugging purposes
+        #print(listed)
         for item in os.listdir('.'):
             if os.path.isdir(item):
                 folderList.append(item)
         folderList.remove('Configuration')
         try:
+            #This is here so that It's easier for me to use...
             folderList.remove('.git')
         except FileNotFoundError:
             ''#print("you aren't the creator, my bad!")
