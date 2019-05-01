@@ -11,6 +11,7 @@ def check4Folders(listed, fltype, MFolder = ''):
         for item in os.listdir('.'):
             if os.path.isdir(item):
                 folderList.append(item)
+        folderList.remove('Configuration')
         try:
             folderList.remove('.git')
         except FileNotFoundError:
@@ -81,34 +82,10 @@ def actionComplete(action, dest, selection):
         
 
 
-f = open('folders.json')
+f = open('./Configuration/folders.json')
 data = json.load(f)
 f.close()
 type(data)
 
 
 print("Thank you for downloading Neeko's All-Purpose Manager\nif you have any issues that you'd like to report, please post them to the github. \n\nThank you!")
-while True:
-    print('checking for new folders')
-    Folders = data['Folders']
-    check4Folders(Folders, 'game')
-    decide = input(f"\nWhich Main? [Enter nothing to check for new folders]\n\n" + ', '.join(Folders) + '\n\n')
-    if decide in Folders:
-        while decide != '':
-            initialDecide = decide
-            subdata = data['Folders'][decide]
-            Folders = data['Folders'][decide]['subs']
-            check4Folders(subdata, 'sub', decide)
-            decide = input("I'm assuming you know what these do, so I'll display what I can see.\n[press ? to search for new folders]\n\n" + ', '.join(Folders) + '\n\n')
-            if decide in Folders:
-                selection = None
-                selectionlist = os.listdir(f'./{initialDecide}/{decide}')
-                while selection not in selectionlist:
-                    selection = input("Please select a skintype\n\n" + ", ".join(selectionlist) + "\n\n")
-                destination = data['Folders'][initialDecide]['directory'] + subdata['directories'][decide]
-                actionComplete(subdata['actions'][decide], destination, f'./{initialDecide}/{decide}/{selection}')
-                print("Alrighty! Done! Going back to main.")
-                decide = initialDecide
-                break
-            else:
-                decide = initialDecide
